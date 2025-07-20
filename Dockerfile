@@ -5,7 +5,7 @@ FROM n8nio/n8n:latest
 USER root
 
 # Install the 'pg' npm package globally
-RUN npm install -g pg
+RUN cd /usr/local/lib/node_modules/n8n && npm install pg
 
 # Switch back to the non-root node user for security
 USER node
