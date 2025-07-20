@@ -1,10 +1,14 @@
 FROM n8nio/n8n:latest
 
-# Switch to root user
 USER root
 
-# Install pg package globally (this avoids workspace conflicts)
-RUN npm install -g pg
+# Install pg in a separate location
+RUN mkdir -p /opt/custom-modules && cd /opt/custom-modules && npm install pg
 
-# Switch back to node user for security
+# Create symlink to make it accessible
+RUN ln -s /opt/custom-modules/node_modules/pg /usr/local/lib/node_modules/pg
+
+# Fix permissions
+RUN chown -R node:node /opt/custom-modules
+
 USER node
