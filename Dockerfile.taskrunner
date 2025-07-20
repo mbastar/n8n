@@ -1,0 +1,16 @@
+# Dockerfile with Task Runner Support
+FROM n8nio/n8n
+
+# Switch to root to install packages
+USER root
+
+# Install build dependencies and pg globally
+RUN apk add --no-cache python3 make g++
+RUN npm install -g pg
+
+# Configure task runner to access global modules
+ENV NODE_PATH="/usr/local/lib/node_modules:$NODE_PATH"
+ENV NODE_FUNCTION_ALLOW_EXTERNAL=pg
+ENV N8N_RUNNERS_ENABLED=true
+
+USER node
