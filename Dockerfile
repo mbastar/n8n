@@ -1,11 +1,7 @@
-FROM n8nio/n8n:latest
+FROM n8nio/n8n
 
-USER root
+# Install pg module globally so task runner can access it
+RUN npm install -g pg
 
-# Create and install in the home directory
-RUN cd /home/node && npm install pg
-
-# Ensure proper ownership
-RUN chown -R node:node /home/node/node_modules
-
-USER node
+# Alternative: Install in the task runner's node_modules
+RUN cd /usr/local/lib/node_modules/n8n/node_modules/@n8n/task-runner && npm install pg
