@@ -1,11 +1,10 @@
-# Start from the official n8n image
 FROM n8nio/n8n:latest
 
-# Switch to the root user to install packages
+# Switch to root user
 USER root
 
-# Install the 'pg' npm package globally
-RUN cd /usr/local/lib/node_modules/n8n && npm install pg
+# Install pg package globally (this avoids workspace conflicts)
+RUN npm install -g pg
 
-# Switch back to the non-root node user for security
+# Switch back to node user for security
 USER node
